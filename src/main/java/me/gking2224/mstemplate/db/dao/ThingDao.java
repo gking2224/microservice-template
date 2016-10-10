@@ -6,15 +6,15 @@ import me.gking2224.mstemplate.model.Thing;
 
 public interface ThingDao {
 
-    Thing createThing(Thing thing);
+    Thing create(Thing thing);
 
-    List<Thing> findAllThings();
+    List<Thing> findAll();
 
-    Thing updateThing(Thing thing);
+    Thing update(Thing thing);
 
-    void deleteThing(Long id);
+    void delete(Long id);
 
-    Thing findThingById(Long id);
+    Thing findById(Long id);
 
 
 }

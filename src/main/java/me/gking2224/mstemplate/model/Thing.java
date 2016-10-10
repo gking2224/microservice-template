@@ -71,4 +71,9 @@ public class Thing implements java.io.Serializable {
     public String getLocation(String location) {
         return this.location;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Thing [id=%s, name=%s]", id, name);
+    }
 }

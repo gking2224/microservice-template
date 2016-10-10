@@ -32,21 +32,6 @@ jar {
     version =  '0.0.1-SNAPSHOT'
 }
 
-apply plugin: 'spring-boot'
-
-springBoot {
-    executable = true
-}
-bootRun {
-    jvmArgs "-Xdebug"
-    jvmArgs "-Xrunjdwp:server=y,transport=dt_socket,address=10001,suspend=y"
-    jvmArgs "-Dorg.jboss.logging.provider=slf4j"
-    args = ["--spring.profiles.active=web,batch"]
-}
-bootRepackage {
-    mainClass = 'me.gking2224.mstemplate.MicroServiceTemplateApplication'
-}
-
 
 //apply from: 'artifactory.gradle'
 apply from: 'database.gradle'
@@ -56,6 +41,20 @@ apply plugin: 'me.gking2224.buildtools'
 apply plugin: 'me.gking2224.awsplugin'
 apply plugin: 'me.gking2224.databasebuild'
 apply plugin: 'me.gking2224.webappbuild'
+
+apply plugin: 'spring-boot'
+springBoot {
+    executable = true
+}
+bootRun {
+    jvmArgs "-Xdebug"
+    jvmArgs "-Xrunjdwp:server=y,transport=dt_socket,address=10001,suspend=n"
+    jvmArgs "-Dorg.jboss.logging.provider=slf4j"
+    args = ["--spring.profiles.active=jmx,web,batch,"+project.env, "--debug"]
+}
+bootRepackage {
+    mainClass = 'me.gking2224.mstemplate.MicroServiceTemplateApplication'
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -96,6 +95,7 @@ dependencies {
     
     // SPRING BOOT
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
     compile("org.springframework.boot:spring-boot:$springBootVersion")
     
     
@@ -107,6 +107,12 @@ dependencies {
     compile("org.springframework:spring-webmvc:$springVersion")
     compile("org.springframework:spring-context-support:$springVersion")
     
+    
+    // AOP
+    compile("org.springframework:spring-aop:${springVersion}")
+    compile("org.aspectj:aspectjrt:1.6.11")
+    compile("org.aspectj:aspectjweaver:1.6.11")
+
 
     
     // MVC

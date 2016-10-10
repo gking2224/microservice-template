@@ -13,7 +13,6 @@ import me.gking2224.mstemplate.model.Thing;
 @Transactional(readOnly=true)
 public class ThingServiceImpl implements ThingService {
 
-
     @Autowired
     private ThingDao dao;
 
@@ -22,30 +21,29 @@ public class ThingServiceImpl implements ThingService {
 
     @Override
     @Transactional(readOnly=false)
-    public Thing createThing(Thing thing) {
-        return dao.createThing(thing);
+    public Thing create(Thing thing) {
+        return dao.create(thing);
     }
 
     @Override
-    public List<Thing> findAllThings() {
-        return dao.findAllThings();
-    }
-
-    @Override
-    @Transactional(readOnly=false)
-    public Thing updateThing(Thing thing) {
-        return dao.updateThing(thing);
+    public List<Thing> findAll() {
+        return dao.findAll();
     }
 
     @Override
     @Transactional(readOnly=false)
-    public void deleteThing(Long id) {
-        dao.deleteThing(id);
+    public Thing update(Thing thing) {
+        return dao.update(thing);
     }
 
     @Override
-    public Thing findThingById(Long id) {
-        return dao.findThingById(id);
+    @Transactional(readOnly=false)
+    public void delete(Long id) {
+        dao.delete(id);
     }
 
+    @Override
+    public Thing findById(Long id) {
+        return dao.findById(id);
+    }
 }

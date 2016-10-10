@@ -45,7 +45,7 @@ public class ThingController {
     @RequestMapping(value="", method=RequestMethod.GET)
     public ResponseEntity<List<Thing>> getAllThings(
     ) {
-        List<Thing> findAllThings = thingService.findAllThings();
+        List<Thing> findAllThings = thingService.findAll();
         List<Thing> b = findAllThings.stream().map(this::enrichThing).collect(toList());
 
         HttpHeaders headers = new HttpHeaders();
@@ -57,7 +57,7 @@ public class ThingController {
     public ResponseEntity<Thing> newThing(
             @RequestBody Thing thing) {
 
-        Thing b = thingService.createThing(thing);
+        Thing b = thingService.create(thing);
         b = enrichThing(b);
 
         HttpHeaders headers = new HttpHeaders();
@@ -72,7 +72,7 @@ public class ThingController {
         if (thing.getId() == null) thing.setId(id);
         else if (!thing.getId().equals(id))
             throw new IllegalArgumentException("Illegal attempt to change immutable field (id)");
-        Thing p = thingService.updateThing(thing);
+        Thing p = thingService.update(thing);
         p = enrichThing(p);
 
         HttpHeaders headers = new HttpHeaders();
@@ -84,7 +84,7 @@ public class ThingController {
     public ResponseEntity<Void> deleteThing(
             @PathVariable("id") final Long id) {
 
-        thingService.deleteThing(id);
+        thingService.delete(id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -94,7 +94,7 @@ public class ThingController {
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<Thing> getThing(
             @PathVariable("id") final Long id) {
-        Thing b = thingService.findThingById(id);
+        Thing b = thingService.findById(id);
         b = enrichThing(b);
 
         HttpHeaders headers = new HttpHeaders();
