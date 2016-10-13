@@ -1,20 +1,8 @@
 package me.gking2224.mstemplate.db.dao;
 
-import java.util.List;
-
+import me.gking2224.common.db.dao.CrudDao;
 import me.gking2224.mstemplate.model.Thing;
 
-public interface ThingDao {
-
-    Thing create(Thing thing);
-
-    List<Thing> findAll();
-
-    Thing update(Thing thing);
-
-    void delete(Long id);
-
-    Thing findById(Long id);
-
+public interface ThingDao extends CrudDao<Thing, Long> {
 
 }

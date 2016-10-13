@@ -1,17 +1,17 @@
 package me.gking2224.mstemplate.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import me.gking2224.common.db.dao.CrudDao;
+import me.gking2224.common.service.AbstractCrudServiceImpl;
 import me.gking2224.mstemplate.db.dao.ThingDao;
 import me.gking2224.mstemplate.model.Thing;
 
 @Component
 @Transactional(readOnly=true)
-public class ThingServiceImpl implements ThingService {
+public class ThingServiceImpl extends AbstractCrudServiceImpl<Thing, Long> implements ThingService {
 
     @Autowired
     private ThingDao dao;
@@ -20,30 +20,7 @@ public class ThingServiceImpl implements ThingService {
     }
 
     @Override
-    @Transactional(readOnly=false)
-    public Thing create(Thing thing) {
-        return dao.create(thing);
-    }
-
-    @Override
-    public List<Thing> findAll() {
-        return dao.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly=false)
-    public Thing update(Thing thing) {
-        return dao.update(thing);
-    }
-
-    @Override
-    @Transactional(readOnly=false)
-    public void delete(Long id) {
-        dao.delete(id);
-    }
-
-    @Override
-    public Thing findById(Long id) {
-        return dao.findById(id);
+    protected CrudDao<Thing, Long> getDao() {
+        return dao;
     }
 }

@@ -22,7 +22,7 @@ environments {
             connectionPoolSize = 2
         }
         webapp {
-            contextPath="/mstemplate"
+            contextPath="${project.contextPath}"
             host="localhost"
             httpPort=project.basePort
         }
@@ -41,7 +41,6 @@ environments {
             username = "${project.localDatabaseUsername}"
         }
         webapp {
-            contextPath="/mstemplate-local"
             httpPort=project.basePort
         }
     }
@@ -54,7 +53,6 @@ environments {
             username = "${project.localDatabaseUsername}"
         }
         webapp {
-            contextPath="/mstemplate-local"
             httpPort=project.basePort
         }
     }
@@ -66,7 +64,6 @@ environments {
             username = "${project.devDatabaseUsername}"
         }
         webapp {
-            contextPath="/mstemplate-dev"
             httpPort=Integer.parseInt(project.basePort)+20
         }
     }
@@ -78,7 +75,6 @@ environments {
             username = "${project.testDatabaseUsername}"
         }
         webapp {
-            contextPath="/mstemplate-test"
             httpPort=Integer.parseInt(project.basePort)+40
         }
     }
@@ -91,7 +87,6 @@ environments {
             connectionPoolSize = 10
         }
         webapp {
-            contextPath="/mstemplate-prod"
             httpPort=Integer.parseInt(project.basePort)+60
         }
     }

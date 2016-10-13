@@ -59,7 +59,7 @@ public class ThingController {
     public ResponseEntity<Thing> newThing(
             @RequestBody Thing thing) {
 
-        Thing b = thingService.create(thing);
+        Thing b = thingService.save(thing);
         b = enrichThing(b);
 
         HttpHeaders headers = new HttpHeaders();

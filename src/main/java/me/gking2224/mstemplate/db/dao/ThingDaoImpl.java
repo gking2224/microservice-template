@@ -3,6 +3,7 @@ package me.gking2224.mstemplate.db.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ import me.gking2224.mstemplate.model.Thing;
 logFile="jmx.log", currencyTimeLimit=15, persistPolicy="Never")
 @Component
 @Transactional
-public class ThingDaoImpl extends AbstractDaoImpl<Thing> implements ThingDao {
+public class ThingDaoImpl extends AbstractDaoImpl<Thing, Long> implements ThingDao{
 
     @Autowired
     protected ThingRepository thingRepository;
@@ -27,37 +28,19 @@ public class ThingDaoImpl extends AbstractDaoImpl<Thing> implements ThingDao {
     }
 
     @Override
-    public Thing create(Thing thing) {
-        Thing saved = thingRepository.save(thing);
-        return saved;
-    }
-
-    @Override
     public List<Thing> findAll() {
-        List<Thing> things = thingRepository.findAll();
-        this.lastLoadCount = things.size();
-        return things;
-    }
-
-    @Override
-    public Thing update(Thing thing) {
-        Thing saved = thingRepository.save(thing);
-        return saved;
-    }
-    
-    @Override
-    public void delete(Long id) {
-        thingRepository.delete(id);
-    }
-
-    @Override
-    public Thing findById(Long id) {
-        Thing thing = thingRepository.findOne(id);
-        return thing;
+        List<Thing> rv = super.findAll();
+        this.lastLoadCount = rv.size();
+        return rv;
     }
 
     @ManagedAttribute
     public int getLastLoadCount() {
         return lastLoadCount;
+    }
+
+    @Override
+    protected JpaRepository<Thing, Long> getRepository() {
+        return thingRepository;
     }
 }
