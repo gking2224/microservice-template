@@ -22,11 +22,12 @@ import me.gking2224.common.jmx.CommonJmxConfiguration;
 import me.gking2224.mstemplate.aop.AopConfiguration;
 import me.gking2224.mstemplate.db.DatabaseConfiguration;
 import me.gking2224.mstemplate.db.EmbeddedDatabaseConfiguration;
+import me.gking2224.mstemplate.security.SecurityConfiguration;
 import me.gking2224.mstemplate.web.WebAppConfiguration;
 
 @Configuration
 @ComponentScan(basePackages={"me.gking2224.mstemplate.service", "me.gking2224.mstemplate.model"})
-@Import({WebAppConfiguration.class, DatabaseConfiguration.class, EmbeddedDatabaseConfiguration.class, CommonConfiguration.class, CommonJmxConfiguration.class, AopConfiguration.class})
+@Import({WebAppConfiguration.class, DatabaseConfiguration.class, EmbeddedDatabaseConfiguration.class, CommonConfiguration.class, CommonJmxConfiguration.class, AopConfiguration.class, SecurityConfiguration.class})
 public class MicroServiceTemplateApplication extends SpringBootServletInitializer {
     
     private ServletContext servletContext;

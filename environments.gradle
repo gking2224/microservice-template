@@ -26,6 +26,12 @@ environments {
             host="localhost"
             httpPort=project.basePort
         }
+        security {
+            host= "${project.securityServiceHost}"
+            port= "${project.securityServicePort}"
+            context= "${project.securityServiceContext}"
+        }
+        jdwpPort = Integer.parseInt(project.basePort)+1
     }
     env("local") {
         database {

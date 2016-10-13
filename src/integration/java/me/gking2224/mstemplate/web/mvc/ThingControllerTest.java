@@ -1,10 +1,10 @@
 package me.gking2224.mstemplate.web.mvc;
 
 import static java.lang.String.valueOf;
-import static me.gking2224.common.utils.JsonMvcTestHelper.doGet;
-import static me.gking2224.common.utils.JsonMvcTestHelper.doPost;
-import static me.gking2224.common.utils.JsonMvcTestHelper.doPut;
-import static me.gking2224.common.utils.JsonMvcTestHelper.responseContent;
+import static me.gking2224.common.utils.test.JsonMvcTestHelper.doGet;
+import static me.gking2224.common.utils.test.JsonMvcTestHelper.doPost;
+import static me.gking2224.common.utils.test.JsonMvcTestHelper.doPut;
+import static me.gking2224.common.utils.test.JsonMvcTestHelper.responseContent;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasToString;
@@ -27,8 +27,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import me.gking2224.common.utils.JsonMvcTestHelper;
 import me.gking2224.common.utils.JsonUtil;
+import me.gking2224.common.utils.test.JsonMvcTestHelper;
 import me.gking2224.mstemplate.model.Thing;
 
 @RunWith(SpringJUnit4ClassRunner.class)

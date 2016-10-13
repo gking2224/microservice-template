@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 import me.gking2224.common.web.CommonWebAppConfiguration;
 import me.gking2224.common.web.WebConfigurationOptions;
+import me.gking2224.securityms.client.SecurityServiceClient;
 
 @Profile("web")
 @ComponentScan({"me.gking2224.mstemplate.web"})
@@ -19,6 +20,14 @@ import me.gking2224.common.web.WebConfigurationOptions;
 @EnableWebMvc
 public class WebAppConfiguration extends WebMvcConfigurationSupport {
     
+    @Bean
+    public SecurityServiceClient securityClient() {
+        SecurityServiceClient client = new SecurityServiceClient();
+        client.setHost("localhost");
+        client.setPort(11000);
+        client.setContext("security-local");
+        return client;
+    }
     @Bean
     public WebConfigurationOptions getConfig() {
         return new WebConfigurationOptions() {

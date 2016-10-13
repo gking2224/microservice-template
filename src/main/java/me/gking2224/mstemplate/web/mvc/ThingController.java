@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import me.gking2224.common.utils.JsonUtil;
 import me.gking2224.mstemplate.model.Thing;
 import me.gking2224.mstemplate.service.ThingService;
 
@@ -39,9 +38,6 @@ public class ThingController {
 	
 	@Autowired  @Qualifier("longDateTimeFormat") DateTimeFormatter dateTimeFormatter;
 
-	@Autowired
-	JsonUtil jsonUtil;
-
     @RequestMapping(value="", method=RequestMethod.GET)
     public ResponseEntity<List<Thing>> getAllThings(
     ) {
@@ -51,6 +47,12 @@ public class ThingController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(APPLICATION_JSON);
         return new ResponseEntity<List<Thing>>(b, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/secure", method=RequestMethod.GET)
+    public ResponseEntity<List<Thing>> getAllThingsSecure(
+    ) {
+        return getAllThings();
     }
 
     @RequestMapping(value="", method=RequestMethod.POST, consumes=APPLICATION_JSON_VALUE)
