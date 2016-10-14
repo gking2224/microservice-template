@@ -1,18 +1,14 @@
 package me.gking2224.mstemplate.web;
 
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import me.gking2224.common.web.CommonWebAppConfiguration;
 import me.gking2224.common.web.WebConfigurationOptions;
-import me.gking2224.securityms.client.SecurityServiceClient;
 
 @Profile("web")
 @ComponentScan({"me.gking2224.mstemplate.web"})
@@ -20,14 +16,6 @@ import me.gking2224.securityms.client.SecurityServiceClient;
 @EnableWebMvc
 public class WebAppConfiguration extends WebMvcConfigurationSupport {
     
-    @Bean
-    public SecurityServiceClient securityClient() {
-        SecurityServiceClient client = new SecurityServiceClient();
-        client.setHost("localhost");
-        client.setPort(11000);
-        client.setContext("security-local");
-        return client;
-    }
     @Bean
     public WebConfigurationOptions getConfig() {
         return new WebConfigurationOptions() {
@@ -43,18 +31,5 @@ public class WebAppConfiguration extends WebMvcConfigurationSupport {
             }
             
         };
-    }
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer){
-      configurer.enable();
-    }
-
-    @Bean
-    public ServletRegistrationBean foo() {
-        DispatcherServlet dispatcherServlet = new DispatcherServlet();   
-        dispatcherServlet.setApplicationContext(getApplicationContext());
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/*");
-        servletRegistrationBean.setName("dispatcher");
-        return servletRegistrationBean;
     }
 }
