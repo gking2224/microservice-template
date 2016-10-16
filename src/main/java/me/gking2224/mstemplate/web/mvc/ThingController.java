@@ -74,7 +74,7 @@ public class ThingController {
         if (thing.getId() == null) thing.setId(id);
         else if (!thing.getId().equals(id))
             throw new IllegalArgumentException("Illegal attempt to change immutable field (id)");
-        Thing p = thingService.update(thing);
+        Thing p = thingService.save(thing);
         p = enrichThing(p);
 
         HttpHeaders headers = new HttpHeaders();

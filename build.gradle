@@ -37,9 +37,7 @@ apply from: 'database.gradle'
 apply from: 'environments.gradle'
 
 apply plugin: 'me.gking2224.buildtools'
-apply plugin: 'me.gking2224.awsplugin'
 apply plugin: 'me.gking2224.databasebuild'
-apply plugin: 'me.gking2224.webappbuild'
 
 apply plugin: 'spring-boot'
 springBoot {
@@ -64,6 +62,7 @@ ext {
       springVersion = "4.3.1.RELEASE"
       springSecurityVersion = "4.1.3.RELEASE"
       springDataVersion = "1.10.2.RELEASE"
+      springBatchVersion = "3.0.7.RELEASE"
       springBootVersion = "1.4.1.RELEASE"
       jacksonVersion = "2.8.0"
       freemarkerVersion = "2.3.23"
@@ -94,6 +93,7 @@ dependencies {
     runtime "ch.qos.logback:logback-access:${logbackVersion}"
     runtime "org.slf4j:jcl-over-slf4j:$slf4jVersion"
     runtime "org.slf4j:jul-to-slf4j:$slf4jVersion"
+    compile "uk.org.lidalia:sysout-over-slf4j:1.0.2"
     
     // SPRING BOOT
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
@@ -108,13 +108,13 @@ dependencies {
     compile("org.springframework.data:spring-data-jpa:$springDataVersion")
     compile("org.springframework:spring-webmvc:$springVersion")
     compile("org.springframework:spring-context-support:$springVersion")
+    compile("org.springframework.batch:spring-batch-core:$springBatchVersion")
     
     
     // AOP
     compile("org.springframework:spring-aop:${springVersion}")
     compile("org.aspectj:aspectjrt:1.6.11")
     compile("org.aspectj:aspectjweaver:1.6.11")
-
 
     
     // MVC
@@ -148,6 +148,8 @@ dependencies {
     compile("org.springframework.security:spring-security-config:$springSecurityVersion")
     
     
+    
+    
     // TESTING
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile "org.springframework:spring-test:$springVersion"
@@ -169,57 +171,10 @@ configurations.compile {
     exclude group: "log4j", module: "log4j"
     exclude group: "commons-logging", module:"commons-logging"
 }
-/*
-applicationDefaultJvmArgs = [
-    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
-]
-*/
 
 configurations {
   published
 }
-
-//task createWebServer(type:CreateInstanceTask) {
-//    imageId = {webServerAmi}
-//    instanceType = "t2.micro"
-//    securityGroup = "restricted"
-//    postInitWaitTime = 60
-//}
-
-//createWebServer << {
-//    project.envProps.webapp.host = publicIpAddress
-//}
-//
-//task deployWar(type:RemoteExec, dependsOn:[war]) {
-//    host = {project.envProps.webapp.host}
-//    keyFileDir = "/Users/gk"
-//    keyFileName = ".awskey"
-//    remoteUser = {project.remoteUser}
-//    timeout = 120
-//    ext.warFileName = {configurations.archives.artifacts.find{it.type=="war"}.file.name}
-//    ext.remoteDir = {"/home/$remoteUser/buildfiles/$runId"}
-//    exec {
-//        cmd = {"mkdir -p $remoteDir"}
-//    }
-//    scp {
-//        fromDir = "$scriptsDir/webapp"
-//        file = "deployWar.sh"
-//        to = {"$remoteDir"}
-//    }
-//    scp {
-//        fromDir = {configurations.archives.artifacts.find{it.type=="war"}.file.parentFile}
-//        file = {warFileName}
-//        to = {"$remoteDir"}
-//        template = false
-//    }
-//    exec {
-//        sudo = true
-//        cmds = [{"chmod 750 $remoteDir/deployWar.sh"}, {"$remoteDir/deployWar.sh"}]
-//    }
-//}
-//task deployWarToNewWebServer(dependsOn:[createWebServer,deployWar])
-//deployWar.mustRunAfter(createWebServer)
-
 sourceSets {
     clientlib {
         java {
@@ -227,7 +182,6 @@ sourceSets {
         }
     }
 }
-
 
 artifacts {
     archives clientlib

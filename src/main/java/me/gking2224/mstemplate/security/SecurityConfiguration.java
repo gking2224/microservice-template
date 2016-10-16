@@ -18,7 +18,6 @@ public class SecurityConfiguration {
             @Override
             public void configure(final HttpSecurity http) throws Exception {
                 http.authorizeRequests().antMatchers(HttpMethod.GET, "/things/secure").hasRole("SUPER_USER");
-                
             }
             
         };
