@@ -11,6 +11,7 @@ import org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebAppl
 import org.springframework.boot.web.support.ServletContextApplicationContextInitializer;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -22,12 +23,21 @@ import me.gking2224.common.jmx.CommonJmxConfiguration;
 import me.gking2224.mstemplate.aop.AopConfiguration;
 import me.gking2224.mstemplate.db.DatabaseConfiguration;
 import me.gking2224.mstemplate.db.EmbeddedDatabaseConfiguration;
+import me.gking2224.mstemplate.jms.MessagingConfiguration;
 import me.gking2224.mstemplate.security.SecurityConfiguration;
 import me.gking2224.mstemplate.web.WebAppConfiguration;
 
 @Configuration
 @ComponentScan(basePackages={"me.gking2224.mstemplate.service", "me.gking2224.mstemplate.model"})
-@Import({WebAppConfiguration.class, DatabaseConfiguration.class, EmbeddedDatabaseConfiguration.class, CommonConfiguration.class, CommonJmxConfiguration.class, AopConfiguration.class, SecurityConfiguration.class})
+@Import({
+    WebAppConfiguration.class,
+    DatabaseConfiguration.class, EmbeddedDatabaseConfiguration.class,
+    CommonConfiguration.class,
+    CommonJmxConfiguration.class,
+    AopConfiguration.class,
+    SecurityConfiguration.class,
+    MessagingConfiguration.class
+})
 public class MicroServiceTemplateApplication extends SpringBootServletInitializer {
     
     private ServletContext servletContext;
@@ -44,6 +54,7 @@ public class MicroServiceTemplateApplication extends SpringBootServletInitialize
                 .registerShutdownHook(true)
                 .web(true)
                 .logStartupInfo(true)
+                .beanNameGenerator(new AnnotationBeanNameGenerator())
                 .sources(MicroServiceTemplateApplication.class);
     }
     private ServletContextApplicationContextInitializer initializer() {
